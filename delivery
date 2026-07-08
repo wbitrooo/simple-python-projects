@@ -1,0 +1,4 @@
+cibi={"hamburger": {"cheddar": 1, "patty":1, "pan":2, "salad":1},
+"coca cola": {"0.5 litres":0.50,"1 litres":1,"1.5 litres":1.5,"2 litres":2},
+"pizza": {"margherita":4, "quattro formaggi":5, "bianca":3.5},
+"fanta":{"0.5 litres":0.50,"1 litres":1,"1.5 litres":1.5,"2 litres":2}}
