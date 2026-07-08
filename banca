@@ -1,0 +1,308 @@
+import time
+print("BANCA")
+# ------VARIABILI BANCOMAT--------
+deposito = 0
+prelievo = 0
+# ---------DATABASE UTENTI----------
+utenti = {"user":{"pin": 2026,"tentativi_totali":0,"ban_temporaneo":False,"ban_permanente":False,"saldo": 50,"tentativi":0,"contatore_depositi":0,"contatore_prelievi":0,"totale_depositato":0,"totale_prelevato":0,"bloccato":False}, "tester":{"pin":9191,"saldo":100,"tentativi_totali":0,"ban_temporaneo":False,"ban_permanente":False,"tentativi":0,"contatore_depositi":0,"contatore_prelievi":0,"totale_depositato":0,"totale_prelevato":0,"bloccato":False}}
+# ---------VARIABILI PIN----------
+utente_corrente = None
+max_tentativi = 3
+logged_in=False
+# -------------PIN------------------
+def login():
+       global utente_corrente ,logged_in
+       print("")
+       print("1=accedi")
+       print("2=iscriviti")
+       try:
+           account=int(input("cosa vuoi fare"))
+       except ValueError:
+           print("")
+           print("devi mettere 1 o 2")
+           return None
+       except EOFError:
+           print("")
+           print("input non ricevuto")
+           return None
+       validi=[1,2]
+       if account not in validi:
+           print("")
+           print("scelta non valida")
+           return None
+       print("") 
+       try:
+          nome = input("nome utente")
+       except EOFError:
+          print("")
+          print("input non ricevuto")
+       if account==1:
+          if nome not in utenti:
+             print("")
+             print("nome non esistente")
+             return None
+          elif utenti[nome]["ban_temporaneo"]:
+               print("account bannato temporaneamente")
+               return None
+          elif utenti[nome]["ban_permanente"]:
+               print("account bannato permanentemente")
+               return None
+          else:
+           ok=utenti[nome]
+           while ok["tentativi"] < max_tentativi:
+            try:
+                print("")
+                pin = int(input("qual'è il pin:"))
+            except ValueError:
+                print("")
+                print("devi mettere un numero")
+                utenti[nome]["tentativi"] += 1
+                utenti[nome]["tentativi_totali"] +=1
+                return None
+            except EOFError:
+                print("")
+                print("input non ricevuto")
+                return None
+            if pin == ok["pin"]:
+                   print("accesso garantito")
+                   utenti[nome]["tentativi"]=0
+                   utente_corrente = nome
+                   logged_in=True
+                   return nome
+            else:
+                 print("")
+                 print("pin errato")
+                 ok["tentativi"] += 1
+                 ok["tentativi_totali"] +=1
+            if ok["tentativi_totali"]>=max_tentativi*2:
+               ok["ban_permanente"]=True
+               return None
+            elif ok["tentativi_totali"] >= max_tentativi:
+                  print("troppi tentativi,conto temporaneamente bloccato")
+                  ok["ban_temporaneo"]=True
+                  attesa=60
+                  while attesa > 0:
+                      if attesa==1:
+                         print(attesa,"secondo rimasto")
+                      else:
+                         print(attesa,"secondi rimasti")
+                      time.sleep(1)
+                      attesa-=1
+                  print("puoi riprovare")
+                  ok["ban_temporaneo"]=False
+                  ok["tentativi"]=0
+                  return None
+#-----------CREAZIONE ACCOUNT----------    
+       elif account==2:
+            print("")
+            if nome in utenti:
+               print("nome gia esistente")
+               return None
+            try:
+               new_pin=int(input("pin"))
+            except ValueError:
+                print("")
+                print("devi mettere un numero")
+                return None
+            except EOFError:
+                print("")
+                print("input non ricevuto")
+                return None
+            else:
+                ok={"saldo":0,"pin":new_pin,"bloccato":False,"tentativi_totali":0,"tentativi":0,"contatore_depositi":0,"contatore_prelievi":0,"totale_depositato":0,"totale_prelevato":0}
+                print("")
+                print("account creato con successo")
+                utente_corrente=nome
+                return nome
+while utente_corrente is None:
+                utente_corrente=login()
+# ----------MENU BANCOMAT-------------
+def menu():
+    global utente_corrente ,logged_in
+    print("")
+    print("utente:",utente_corrente,)
+    print("0=esci")
+    print("1=prelieva")
+    print("2=deposita")
+    print("3=statistiche")
+    print("4=accedi ad un altro account")
+    print("5=crea nuovo account")
+    try:
+        scelta = int(input("cosa vuoi fare:"))
+    except ValueError:
+        print("devi mettere un numero")
+        return None
+    except EOFError:
+        print("input non ricevuto") 
+        return None
+    validi = [0, 1, 2, 3,4,5]
+    if scelta not in validi:
+        print("scelta non valida")
+        return None
+    if scelta == 0:
+        utente_corrente=None
+        logged_in=False
+        print("") 
+        login()
+    # --------------PRELIEVO-------------
+    if scelta == 1:
+        print("")
+        try:
+            prelievo = int(input("quanto vuoi prelevare:"))
+        except ValueError:
+            print("devi inserire un numero")
+            return None
+        except EOFError:
+            print("")
+            print("input non ricevuto")
+            return None
+        if prelievo <= 0:
+            print("")
+            print("prelievo non valido")
+            return None
+        elif prelievo > utenti[utente_corrente]["saldo"]:
+            print("")
+            print("saldo insufficiente")
+            print("saldo attuale:",utenti[utente_corrente]["saldo"],)
+            return None
+        else:
+            utenti[utente_corrente]["saldo"] -= prelievo
+            utenti[utente_corrente]["contatore_prelievi"] += 1
+            utenti[utente_corrente]["totale_prelevato"] += prelievo
+            print("")
+            print("prelievo effetuato")
+            print("saldo attuale:",utenti[utente_corrente]["saldo"],)
+    # ------------DEPOSITO------------------
+    elif scelta == 2:
+        print("")
+        try:
+            deposito = int(input("quanto vuoi depositare"))
+        except ValueError:
+            print("")
+            print("devi mettere un numero")
+            return None
+        except EOFError:
+            print("")
+            print("input non ricevuto")
+        if deposito <= 0:
+            print("")
+            print("deposito non valido")
+            return None
+        else:
+            utenti[utente_corrente]["saldo"]+=deposito
+            utenti[utente_corrente]["contatore_depositi"] += 1
+            utenti[utente_corrente]["totale_depositato"] += deposito
+            print("")
+            print("deposito effetuato")
+            print("")
+            print("saldo attuale:",utenti[utente_corrente]["saldo"],)
+    # --------------STATISTICHE------------
+    elif scelta == 3:
+        print("")
+        print("saldo attuale:",utenti[utente_corrente]["saldo"])
+        print("totale depositato:",utenti[utente_corrente]["totale_depositato"])
+        print("totale prelevato:",utenti[utente_corrente]["totale_prelevato"])
+        print("numeri depositi:",utenti[utente_corrente]["contatore_depositi"],)
+        print("numeri prelievi:",utenti[utente_corrente]["contatore_prelievi"],)                          
+ #----------------ACCESSO AD UN ALTRO ACCOUNT------
+    elif scelta == 4:
+        try:
+            nome=input("nome utente")
+        except EOFError:
+            print("")
+            print("input non ricevuto")
+            return None
+        if nome not in utenti:
+           print("")
+           print("nome non esistente")
+           return None
+        elif utenti[nome]["ban_temporaneo"]:
+             print("")
+             print("account bloccato temporaneamente")
+             return None
+        elif utenti[nome]["ban_permanente"]:
+             print("")
+             print("account bloccato permanentemente")
+             return None
+        tentativi=0
+        while utenti[nome]["tentativi"] < max_tentativi:
+            try:
+                print("")
+                pin = int(input("qual'è il pin:"))
+            except ValueError:
+                print("")
+                print("devi mettere un numero")
+                utenti[nome]["tentativi"] += 1
+                utenti[nome]["tentativi_totali"] +=1
+                return None
+            except EOFError:
+                print("")
+                print("input non ricevuto")
+                return None
+            if pin == utenti[nome]["pin"]:
+               print("accesso garantito")
+               utenti[nome]["tentativi"]=0
+               utenti[nome]["tentativi"]=0
+               utente_corrente = nome
+               logged_in=True
+               menu()
+               return nome
+               
+            else:
+               print("")
+               print("pin errato")
+               utenti[nome]["tentativi"] += 1
+               utenti[nome]["tentativi_totali"] +=1
+            if utenti[nome]["tentativi_totali"]>=max_tentativi*2:
+               utenti[nome]["ban_permanente"]=True
+            if utenti[nome]["tentativi_totali"] >= max_tentativi:
+               print("troppi tentativi, conto temporaneamente bloccato")
+               attesa=60
+               while attesa > 0:
+                  if attesa==1:
+                     print(attesa,"secondo rimasto")
+                  else:
+                      print(attesa,"secondi rimasti")
+                      time.sleep(1)
+                      attesa-=1
+                  print("puoi riprovare")
+                  utenti[nome]["ban_temporaneo"]==False
+            
+            
+            if logged_in:
+               menu()
+   #----------CREAZIONE NUOVO ACCOUNT------
+    elif scelta == 5:
+          logged_in=False
+          print("")
+          try:
+              nome=input("nome utente")
+          except EOFError:
+              print("")
+              print("input non ricevuto")
+              return None
+          if nome in utenti:
+             print("nome gia esistente")
+             return None
+          try:
+             print("")
+             new_pin=int(input("pin"))
+          except ValueError:
+              print("")
+              print("devi mettere un numero")
+          except EOFError:
+              print("")
+              print("input non ricevuto")
+              return None
+          else:
+              utenti[nome]={"saldo":0,"pin":new_pin,"tentativi_totali":0,"tentativi":0,"contatore_depositi":0,"contatore_prelievi":0,"totale_depositato":0,"totale_prelevato":0}
+              print("")
+              print("account creato con successo")
+              utente_corrente=nome 
+              return nome
+while True:
+    if utente_corrente is None:
+       utente_corrente=login()
+    else:
+        menu()
+ 
