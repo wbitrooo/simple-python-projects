@@ -1,0 +1,172 @@
+print("test scienze")
+totale = 0
+punti_facile = 0
+punti_medio = 0
+punti_difficile = 0
+while True:
+    print("categorie:")
+    print("0=esci")
+    print("1=gioca")
+    print("2=statistiche")
+    try:
+        categoria = int(input("scegli una categoria:"))
+    except ValueError:
+        print("categoria non disponibile")
+        continue
+    if categoria == 0:
+        print("programma chiuso")
+        break
+    if categoria == 2:
+        print("hai", totale, "punti totali")
+        print("hai", punti_facile, "punti facili")
+        print("hai", punti_medio, "punti medi")
+        print("hai", punti_difficile, "punti difficili")
+        continue
+    if categoria != 1:
+        print("categoria non disponibile")
+        continue
+    if categoria == 1:
+        print("difficulta:")
+        print("1=facile")
+        print("2=medio")
+        print("3=difficile")
+    try:
+        difficulta = int(input("scegli una difficulta:"))
+    except ValueError:
+        print("difficulta non disponibile")
+        continue
+    if categoria != 1:
+        print("categoria non disponibile")
+    # ----------facile---------------------
+    if difficulta == 1:
+        print("quante ossa ha un adulto in media:")
+        print("1=168")
+        print("2=206")
+        print("3=270")
+        risposta = int(input("risposta:"))
+        if risposta == 2:
+            print("giusto,hai vinto un punto")
+            totale += 1
+            punti_facile += 1
+        else:
+            print("sbagliato,la risposta corretta era 2")
+            print("Perché il cielo è azzurro:")
+            print("1=perche riflette il colore degli oceani")
+            print("2=Perché l'ossigeno puro è un gas di colore azvole")
+            print("3=Perché l'atmosfera disperde la luce blu più degli altri colori")
+            risposta = int(input("risposta:"))
+        if risposta == 3:
+            print("giusto,hai vinto un punto")
+            totale += 1
+            punti_facile += 1
+        else:
+            print("sbagliato,la risposta corretta era 3")
+            print(
+                "Quale emisfero del cervello umano controlla i movimenti della mano destra:"
+            )
+            print("1=l'emisfero sinistro")
+            print("2=entrambi gli emisferi")
+            print("3=l'emisfero destro")
+            risposta = int(input("risposta:"))
+            if risposta == 1:
+                print("giusto,hai vinto un punto")
+                totale += 1
+                punti_facile += 1
+            else:
+                print("sbagliato,ma puoi ancora farcela")
+                print(
+                    "Quale organo del corpo umano consuma più energia,anche quando siamo a riposo:"
+                )
+                print("1=cuore")
+                print("2=muscoli")
+                print("3=cervello")
+                risposta = int(input("risposta:"))
+            if risposta == 3:
+                print("giusto,hai vinto un punto")
+                totale += 1
+                punti_facile += 1
+            else:
+                print("sbagliato,ma puoi ancora farcela")
+                print("In quanto tempo,la luce del Sole raggiunge la Terra:")
+                print("1=12 ore")
+                print("2=8 minuti")
+                print("3=5 minuti")
+                risposta = int(input("risposta:"))
+            if risposta == 2:
+                print("giusto,hai vinto un punto")
+                totale += 1
+                punti_facile += 1
+            else:
+                print("sbagliato,ma puoi ancora farcela")
+    # ---------medio-------------
+    elif difficulta == 2:
+        print("Quale gas è più abbondante nell’atmosfera terrestre")
+        print("1=ossigeno")
+        print("2=azoto")
+        print("3=anidride carbonica")
+        risposta = int(input("risposta:"))
+        if risposta == 1:
+            print("giusto,hai vinto due punti")
+            totale += 2
+            punti_medio += 1
+        else:
+            print("sbagliato,ma puoi ancora farcela")
+        print("Quale stato della materia ha volume proprio ma non forma propria")
+        print("1=plasma")
+        print("2=gas")
+        print("3=liquido")
+        risposta = int(input("risposta:"))
+        if risposta == 3:
+            print("giusto,hai vinto due punti")
+            totale += 2
+            punti_medio += 1
+        else:
+            print("sbagliato,ma puoi ancora farcela")
+        print("Quale particella dell’atomo ha carica negativa:")
+        print("1=neutrone")
+        print("2=elettrone")
+        print("3=protone")
+        risposta = int(input("risposta:"))
+        if risposta == 2:
+            print("giusto,hai vinto due punti")
+            totale += 2
+            punti_medio += 1
+        else:
+            print("sbagliato,ma puoi ancora farcela")
+            print("quanti denti ha un adulto medio")
+            print("1=32")
+            print("2=28")
+            print("3=40")
+            risposta = int(input("risposta:"))
+            if risposta == 1:
+                print("giusto,hai vinto due punti")
+                totale += 2
+                punti_medio += 1
+            else:
+                print("sbagliato,ma puoi ancora farcela")
+        print("Qual è la temperatura normale del corpo umano:")
+        print("1=40")
+        print("2=33")
+        print("3=37")
+        risposta = int(input("risposta:"))
+        if risposta == 3:
+            print("giusto")
+            totale += 2
+            punti_medio += 1
+        else:
+            print("sbagliato,ma puoi ancora farcela")
+    # ---------difficile--------------
+    if difficulta == 3:
+        print("Quanti litri di sangue ha un adulto medio")
+        print("1=2-3 litri")
+        print("2=3-4 litri")
+        print("3=10-12 litri")
+        risposta = int(input("risposta:"))
+        if risposta == 2:
+           print("giusto")
+           totale += 3
+           punti_difficile += 1
+        else:
+            print("sbagliato,la risposta era 2")
+
+Adesso che ne dici
