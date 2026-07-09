@@ -168,5 +168,3 @@ while True:
            punti_difficile += 1
         else:
             print("sbagliato,la risposta era 2")
-
-Adesso che ne dici
