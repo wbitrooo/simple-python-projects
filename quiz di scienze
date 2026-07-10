@@ -158,10 +158,10 @@ while True:
         print("")
         print("Quanti litri di sangue ha un adulto medio")
         print("1=2-3 litri")
-        print("2=3-4 litri")
+        print("2=5-7 litri")
         print("3=10-12 litri")
         risposta = int(input("risposta:"))
-        if risposta == 3:
+        if risposta == 2:
            print("giusto,hai vinto 3 punti")
            totale += 3
            punti_difficile += 1
@@ -184,7 +184,7 @@ while True:
         print("3=A,D")
         risposta=int(input("risposta:"))
         if risposta == 1:
-            print("giusto,hai vinto un punto")
+            print("giusto,hai vinto tre punti")
             totale +=3
             punti_difficile +=1
         else:
