@@ -1,217 +1,140 @@
-print("test scienze")
+print("TEST SCIENZE")
+partite_giocate=0
 totale = 0
 punti_facile = 0
 punti_medio = 0
 punti_difficile = 0
+percentuale_facile=punti_facile*20
+percentuale_medio=punti_medio*20
+percentuale_difficile=punti_difficile*20
+record_facile=0
+record_medio=0
+record_difficile=0
+vita=0
+streak=0
+domanda=[
+{"testo":"Quante ossa ha un adulto in media?","opzioni":[168,206,270],"risposta":2,"difficolta":"facile","punti":1},{
+ "testo":"Perché il cielo è azzurro?","opzioni":["perche riflette il colore degli oceani","perché l'ossigeno puro è un gas di colore azvole","Perché l'atmosfera disperde la luce blu più degli altri colori"],"risposta":3,"difficolta":"facile","punti":1},{
+ "testo":"Quale emisfero del cervello umano controlla i movimenti della mano destra","opzioni":["l'emisfero sinistro","entrambi gli emisferi","l'emisfero destro"],"risposta":1,"difficolta":"facile","punti":1},{
+ "testo":"Quale organo del corpo umano consuma più energia,anche quando siamo a riposo?","opzioni":["il cuore","i muscoli","il cervello"],"risposta":3,"difficolta":"facile","punti":1},{
+ "testo":"In quanto tempo,la luce del Sole raggiunge la Terra?","opzioni":["12 ore","5,50 minuti","8,32 minuti"],"risposta":3,"punti":1,"difficolta":"facile"},{
+ "testo":"Quale gas è più abbondante nell’atmosfera terrestre?","opzioni":["ossigeno","azoto","anidride carbonica"],"risposta":2,"difficolta":"medio","punti":2},{
+ "testo":"Quale stato della materia ha volume proprio ma non forma propria?","opzioni":["plasma","liquido","gas"],"risposta":2,"difficolta":"medio","punti":2},{
+ "testo":"Quale particella dell’atomo ha carica negativa?","opzioni":["elettrone","protone","neutrone"],"risposta":1,"punti":2,"difficolta":"medio"},{
+ "testo":"Quanti denti ha un adulto medio?","opzioni":[32,40,28],"risposta":1,"punti":2,"difficolta":"medio"},{
+ "testo":"Qual è la temperatura normale del corpo umano?","opzioni":[37,40,35],"risposta":1,"punti":2,"difficolta":"medio"},{
+ "testo":"Quanti litri di sangue ha un adulto medio?","opzioni":["1-3","5-7","10-12"],"risposta":2,"punti":3,"difficolta":"difficile"},{
+ "testo":"Perché piove?","opzioni":["Nuvole contengono troppa acqua","goccie d'acqua troppo pesanti per restare sospesi","Forte vento agita le nuvole provocando la caduta d'acqua"],"risposta":2,"punti":3,"punti_difficolta":1,"difficolta":"difficile"},{
+ "testo":"Quali vitamine sono idrosolubili?","opzioni":["B,C","E,C","A,D"],"risposta":1,"punti":3,"difficolta":"difficile"},{
+ "testo":"Quanto sono profondi mediamente gli oceani?","opzioni":["4000 Metri","4800 Metri","5090 Metri"],"risposta":2,"difficolta":"difficile","punti":3},{
+ "testo":"Cosa causa la alta e bassa marea?","opzioni":["la luna","temperatura della pioggia","il vento e la pioggia"],"risposta":1,"difficolta":"difficile","punti":3}]
 while True:
     print("categorie:")
     print("0=esci")
     print("1=gioca")
     print("2=statistiche")
     try:
+        print("")
         categoria = int(input("scegli una categoria:"))
     except ValueError:
         print("categoria non disponibile")
         continue
-    if categoria == 0:
-        print("programma chiuso")
-        break
-    if categoria == 2:
-        print("hai", totale, "punti totali")
-        print("hai", punti_facile, "punti facili")
-        print("hai", punti_medio, "punti medi")
-        print("hai", punti_difficile, "punti difficili")
+    except EOFError:
+        print("metti una categoria disponibile")
         continue
-    if categoria != 1:
-        print("categoria non disponibile")
-        continue
-    if categoria == 1:
-        print("difficulta:")
-        print("1=facile")
-        print("2=medio")
-        print("3=difficile")
+    match categoria:
+       case 0:
+            print("programma chiuso")
+            exit()
+            break
+       case 2:
+            if partite_giocate==0:
+                print("")
+                print("devi giocare per vedere le statistiche")
+                continue
+            else:
+             print("")
+             if totale==1:
+                 print("hai", totale, "punto totale")
+             else:
+                 print("hai", totale, "punti totali")
+             print(f"facile:progresso = {percentuale_facile}% ({punti_facile}/{5})")
+             print(f"facile:record= {percentuale_facile}% ({record_facile}/{5})")
+             print(f"medio:progresso= {percentuale_medio}% ({punti_medio}/{5})")
+             print(f"medio:record= {percentuale_medio}% ({record_medio}/{5})")
+             print(f"difficile:progresso= {percentuale_difficile}%({punti_difficile}/{5})")
+             print(f"difficile:record= {percentuale_difficile}%({record_difficile}/{5})")
+             continue 
+       case 1:
+           print("")
+           print("difficolta:")
+           print("1=facile(5 vite)")
+           print("2=medio( 3 vite)")
+           print("3=difficile( 1 vita)")
     try:
-        difficulta = int(input("scegli una difficulta:"))
+        print("")
+        difficolta = int(input("scegli una difficulta:"))
     except ValueError:
-        print("difficulta non disponibile")
+        print("difficolta non disponibile")
+        continue
+    except EOFError:
+        print("difficolta non disponibile")
         continue
     if categoria != 1:
         print("categoria non disponibile")
-    # ----------facile---------------------
-    if difficulta == 1:
-        print("")
-        print("quante ossa ha un adulto in media:")
-        print("1=168")
-        print("2=206")
-        print("3=270")
-        risposta = int(input("risposta:"))
-        if risposta == 2:
-            print("giusto,hai vinto un punto")
-            totale += 1
-            punti_facile += 1
-        else:
-            print("sbagliato,la risposta corretta era 2")
-        print("Perché il cielo è azzurro:")
-        print("1=perche riflette il colore degli oceani")
-        print("2=Perché l'ossigeno puro è un gas di colore azvole")
-        print("3=Perché l'atmosfera disperde la luce blu più degli altri colori")
-        risposta = int(input("risposta:"))
-        if risposta == 3:
-            print("giusto,hai vinto un punto")
-            totale += 1
-            punti_facile += 1
-        else:
-            print("sbagliato,la risposta era 3")
-        print("Quale emisfero del cervello umano controlla i movimenti della mano destra:")
-        print("1=l'emisfero sinistro")
-        print("2=entrambi gli emisferi")
-        print("3=l'emisfero destro")
-        risposta = int(input("risposta:"))
-        if risposta == 1:
-          print("giusto,hai vinto un punto")
-          totale += 1
-          punti_facile += 1
-        else:
-                print("sbagliato,la risposta era 1")
-        print("Quale organo del corpo umano consuma più energia,anche quando siamo a riposo:")
-        print("1=cuore")
-        print("2=muscoli")
-        print("3=cervello")
-        risposta = int(input("risposta:"))
-        if risposta == 3:
-                print("giusto,hai vinto un punto")
-                totale += 1
-                punti_facile += 1
-        else:
-                print("sbagliato,la risposta era 3")
-        print("In quanto tempo,la luce del Sole raggiunge la Terra:")
-        print("1=12 ore")
-        print("2=8 minuti")
-        print("3=5 minuti")
-        risposta = int(input("risposta:"))
-        if risposta == 2:
-           print("giusto,hai vinto un punto")
-           totale += 1
-           punti_facile += 1
-        else:
-            print("sbagliato,la risposta era 2")
-    # ---------medio-------------
-    elif difficulta == 2:
-        print("")
-        print("Quale gas è più abbondante nell’atmosfera terrestre")
-        print("1=ossigeno")
-        print("2=azoto")
-        print("3=anidride carbonica")
-        risposta = int(input("risposta:"))
-        if risposta == 1:
-            print("giusto,hai vinto due punti")
-            totale += 2
-            punti_medio += 1
-        else:
-            print("sbagliato,la risposta era 1")
-        print("Quale stato della materia ha volume proprio ma non forma propria")
-        print("1=plasma")
-        print("2=gas")
-        print("3=liquido")
-        risposta = int(input("risposta:"))
-        if risposta == 3:
-            print("giusto,hai vinto due punti")
-            totale += 2
-            punti_medio += 1
-        else:
-            print("sbagliato,la risposta era 3")
-        print("Quale particella dell’atomo ha carica negativa:")
-        print("1=neutrone")
-        print("2=elettrone")
-        print("3=protone")
-        risposta = int(input("risposta:"))
-        if risposta == 2:
-            print("giusto,hai vinto due punti")
-            totale += 2
-            punti_medio += 1
-        else:
-            print("sbagliato,la risposta era 2")
-        print("quanti denti ha un adulto medio")
-        print("1=32")
-        print("2=28")
-        print("3=40")
-        risposta = int(input("risposta:"))
-        if risposta == 1:
-                print("giusto,hai vinto due punti")
-                totale += 2
-                punti_medio += 1
-        else:
-                print("sbagliato,la risposta era 1")
-        print("Qual è la temperatura normale del corpo umano:")
-        print("1=40")
-        print("2=33")
-        print("3=37")
-        risposta = int(input("risposta:"))
-        if risposta == 3:
-            print("giusto")
-            totale += 2
-            punti_medio += 1
-        else:
-            print("sbagliato,la risposta era 3")
-    # ---------difficile--------------
-    if difficulta == 3:
-        print("")
-        print("Quanti litri di sangue ha un adulto medio")
-        print("1=2-3 litri")
-        print("2=5-7 litri")
-        print("3=10-12 litri")
-        risposta = int(input("risposta:"))
-        if risposta == 2:
-           print("giusto,hai vinto 3 punti")
-           totale += 3
-           punti_difficile += 1
-        else:
-            print("sbagliato,la risposta era 2")
-        print("perché piove?")
-        print("1=Nuvole contengono troppa acqua")
-        print("2=Gocce d'acqua troppo pesanti per restare sospese")
-        print("3=Forte vento agita le nuvole provocando la caduta d'acqua")
-        risposta=int(input("risposta:"))
-        if risposta == 2:
-            print("giusto,hai vinto 3 punti")
-            totale +=3
-            punti_difficile +=1
-        else:
-            print("sbagliato,la risposta era 2")
-        print("quali vitamine sono idrosolubili?")
-        print("1=B,C")
-        print("2=E,C")
-        print("3=A,D")
-        risposta=int(input("risposta:"))
-        if risposta == 1:
-            print("giusto,hai vinto tre punti")
-            totale +=3
-            punti_difficile +=1
-        else:
-            print("sbagliato,la risposta era 1")
-        print("quanto sono profondi mediamente gli oceani?")
-        print("1=4000 metri")
-        print("2=1100 metri")
-        print("3=5000 metri")
-        risposta=int(input("risposta:"))
-        if risposta == 1:
-            print("giusto,hai vinto un punto")
-            totale +=3
-            punti_difficile +=1
-        else:
-            print("sbagliato,la risposta era 1")
-        print("cosa causa la alta e bassa marea?")
-        print("1=la luna")
-        print("2=temperatura della pioggia")
-        print("3=vento e pioggia")
-        risposta=int(input("risposta:"))
-        if risposta==1:
-            print("giusto,hai vinto un punto")
-            totale +=3
-            punti_difficile +=1
-        else:
-            print("sbagliato,la risposta era 1")
-            
-        
-        
+        continue
+# ----------facile---------------------
+    match difficolta:
+       case 1:
+           livello = "facile"
+           vita=5
+       case 2:
+            livello  = "medio"
+            vita=3
+       case 3:
+           livello = "difficile"
+           vita=1
+       case _:
+           print("difficolta non disponibile")
+           continue
+    partite_giocate+=1
+    
+    print("")
+    for d in domanda:
+            if d["difficolta"]==livello:
+                print("")
+                print(d["testo"])
+                for numero,opzioni in enumerate(d["opzioni"],start=1):
+                        print(numero,"=",opzioni)
+                try:
+                   risposta=int(input("risposta:"))
+                except ValueError:
+                    print("metta una opzione disponibile")
+                    continue
+                except EOFError:
+                        print("metta una opzione disponibile")
+                        continue
+                if risposta == d["risposta"]:
+                   totale += d["punti"]
+                   if d["punti"]==1:
+                      print(f"giusto hai vinto",d["punti"],"punto")
+                   else:
+                       print(f"giusto hai vinto",d["punti"],"punti")
+                   streak+=1
+                   if livello=="facile":
+                      punti_facile +=1
+                      percentuale_facile=punti_facile*20
+                      record_facile+=1
+                   elif livello=="medio":
+                       punti_medio +=1
+                       record_medio+=1
+                       percentuale_medio=punti_medio*20
+                   else:
+                       punti_difficile +=1
+                       record_difficile+=1
+                       percentuale_difficile=punti_difficile*20
+                else:
+                  print("sbagliato,la risposta corretta era",d["risposta"]) 
+                  streak=0
+                  vita-=1
         
